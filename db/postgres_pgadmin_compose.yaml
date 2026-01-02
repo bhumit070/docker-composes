@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      POSTGRES_USER: 'test'
+      POSTGRES_PASSWORD: 'test'
+    ports:
+      - '5001:5432'
+    restart: unless-stopped
+    volumes:
+      - $HOME/docker/postgres:/var/lib/postgresql
+
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'test@test.com'
+      PGADMIN_DEFAULT_PASSWORD: 'test'
+    ports:
+      - '5002:80'
+    volumes:
+      - $HOME/docker/pgadmin:/var/lib/pgadmin
