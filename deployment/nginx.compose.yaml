@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: nginx@sha256:b60f25eb5acdd79172de1a289891d9cfe4fc3669daddeeb68619240cbe839d9f # trixie-perl
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $HOME/dotfiles/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - $HOME/dotfiles/nginx/conf.d:/etc/nginx/conf.d:ro
+      - $HOME/dotfiles/nginx/snippets:/etc/nginx/snippets:ro
+      - $HOME/dotfiles/nginx/logs:/var/log/nginx
+      - $HOME/dotfiles/nginx/html:/usr/share/nginx/html:ro
+    restart: unless-stopped
