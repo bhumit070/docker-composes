@@ -9,11 +9,13 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
+    environment:
+      - DB_HOSTNAME=immich_postgres
     ports:
       - "2283:2283"
     depends_on:
       - redis
-      - database
+      - immich_postgres
     restart: always
     healthcheck:
       disable: false
@@ -36,7 +38,7 @@ services:
       test: redis-cli ping || exit 1
     restart: always
 
-  database:
+  immich_postgres:
     container_name: immich_postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     environment:
