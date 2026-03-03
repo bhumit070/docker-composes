@@ -68,5 +68,14 @@ services:
         target: /media
     restart: always
 
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - "5050:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   model-cache:
