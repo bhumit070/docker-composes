@@ -5,6 +5,14 @@
         - type: calendar
           first-day-of-week: sunday
 
+        - type: clock
+          hour-format: 24h
+          timezones:
+            - timezone: Asia/Kolkata
+              label: India
+            - timezone: Asia/Tokyo
+              label: Japan
+
         - type: bookmarks
           groups:
             - title: Homelab
@@ -24,6 +32,15 @@
               - title: Dozzle
                 url: http://codingmachine:5050
                 icon: si:docker
+
+    - size: full
+      widgets:
+        - type: iframe
+          source: http://codingmachine:5050/
+          height: 400
+
+        - type: docker-containers
+          hide-by-default: false
 
 - name: Youtube # Somehow make it full screen
   columns:
