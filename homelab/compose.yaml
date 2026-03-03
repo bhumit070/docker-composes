@@ -66,7 +66,7 @@ services:
       - type: bind
         source: ${JELLYFIN_MEDIA_LOCATION}
         target: /media
-    restart: "unless-stopped"
+    restart: always
 
 volumes:
   model-cache:
