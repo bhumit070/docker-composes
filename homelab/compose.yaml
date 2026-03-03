@@ -61,7 +61,7 @@ services:
       - 8096:8096/tcp
       - 7359:7359/udp
     volumes:
-      - /jellyfin-config:/config
+      - ./jellyfin-config:/config
       - ./jellyfin-cache:/cache
       - type: bind
         source: ${JELLYFIN_MEDIA_LOCATION}
