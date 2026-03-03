@@ -1,6 +1,6 @@
 - name: Home
   columns:
-    - size: full
+    - size: small
       widgets:
         - type: calendar
           first-day-of-week: sunday
