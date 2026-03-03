@@ -47,7 +47,7 @@
     - size: full
       widgets:
         - type: videos
-          limit: 12
+          limit: 100
           channels:
             - UC5--wS0Ljbin1TjWQX6eafA # bigboxSWE
             - UC_b1GUJv_2QiMP4BxC9-Dxg # Arpit Bhayani
@@ -55,6 +55,7 @@
             - UCzF68Hu6AqrqX_p-HHwZDqg # Mehul Mohan
             - UCbRP3c757lWg9M-U7TyEkXA # Theo - t3.gg
             - UCyxmnhV5Qv7foKM7ZrF5V0w # Akshay Dixit
+          style: grid-cards
 
 - name: Reddit
   columns:
