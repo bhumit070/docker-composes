@@ -1,7 +1,7 @@
 name: homelab
 
 services:
-  immich-server:
+  immich-server: # Self hosted photos
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
@@ -54,7 +54,7 @@ services:
     healthcheck:
       disable: false
 
-  jellyfin:
+  jellyfin: # Self hosted media server
     image: jellyfin/jellyfin
     container_name: jellyfin
     ports:
@@ -68,7 +68,7 @@ services:
         target: /media
     restart: always
 
-  dozzle:
+  dozzle: # Docker container logs viewer
     image: amir20/dozzle:latest
     container_name: dozzle
     restart: always
@@ -77,7 +77,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  glance:
+  glance: # Dashboard for homelab
     container_name: glance
     image: glanceapp/glance
     restart: unless-stopped
@@ -90,7 +90,7 @@ services:
       - 80:8080
     env_file: .env
 
-  filebrowser:
+  filebrowser: # File browser for homelab
     image: filebrowser/filebrowser
     container_name: filebrowser
     ports:
