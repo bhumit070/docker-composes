@@ -55,6 +55,7 @@
             - UCzF68Hu6AqrqX_p-HHwZDqg # Mehul Mohan
             - UCbRP3c757lWg9M-U7TyEkXA # Theo - t3.gg
             - UCyxmnhV5Qv7foKM7ZrF5V0w # Akshay Dixit
+            - UCYeiozh-4QwuC1sjgCmB92w # DevOps Toolbox
           style: grid-cards
 
 - name: Reddit
@@ -66,6 +67,7 @@
             - type: reddit
               subreddit: headphones
               show-thumbnails: true
+              limit: 10
 
             - type: reddit
               subreddit: headphonesindia
