@@ -26,12 +26,16 @@
                 icon: si:immich
 
               - title: qBittorrent
-                url: http://codingmachine:8080
+                url: http://codingmachine:5678
                 icon: si:qbittorrent
 
               - title: Dozzle
                 url: http://codingmachine:5050
                 icon: si:docker
+
+              - title: FileBrowser
+                url: http://codingmachine:8080
+                icon: si:files
 
     - size: full
       widgets:

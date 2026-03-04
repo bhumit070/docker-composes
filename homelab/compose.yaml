@@ -90,5 +90,19 @@ services:
       - 80:8080
     env_file: .env
 
+  filebrowser:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    ports:
+      - "8080:80"
+    volumes:
+      - /:/srv
+      - filebrowser_database:/database
+      - filebrowser_config:/config
+    restart: always
+
 volumes:
   model-cache:
+  filebrowser_data:
+  filebrowser_database:
+  filebrowser_config:
