@@ -68,11 +68,18 @@
       widgets:
         - type: group
           widgets:
+
+            - type: reddit
+              subreddit: developersIndia
+              show-thumbnails: true
+              limit: 100
+
             - type: reddit
               subreddit: headphones
               show-thumbnails: true
-              limit: 10
+              limit: 100
 
             - type: reddit
               subreddit: headphonesindia
               show-thumbnails: true
+              limit: 100
