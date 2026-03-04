@@ -22,7 +22,7 @@
                 icon: si:jellyfin
 
               - title: Photos
-                url: http://codingmachine:8096
+                url: http://codingmachine:2283
                 icon: si:immich
 
               - title: qBittorrent
@@ -36,6 +36,10 @@
               - title: FileBrowser
                 url: http://codingmachine:8080
                 icon: si:files
+
+              - title: Linkedin Post Generator
+                url: http://codingmachine:5701
+                icon: si:postiz
 
     - size: full
       widgets:
