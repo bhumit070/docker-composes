@@ -33,6 +33,10 @@
                 url: http://codingmachine:5050
                 icon: si:docker
 
+              - title: Portainer
+                url: https://codingmachine:9443
+                icon: si:docker
+
               - title: FileBrowser
                 url: http://codingmachine:8080
                 icon: si:files
@@ -40,6 +44,10 @@
               - title: Linkedin Post Generator
                 url: http://codingmachine:5701
                 icon: si:postiz
+
+              - title: Task management
+                url: http://codingmachine:3456
+                icon: si:todoist
 
     - size: full
       widgets:

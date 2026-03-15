@@ -19,6 +19,8 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - default
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -30,6 +32,8 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - default
 
   redis:
     container_name: immich_redis
@@ -37,6 +41,8 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
+    networks:
+      - default
 
   immich_postgres:
     container_name: immich_postgres
@@ -52,7 +58,11 @@ services:
     shm_size: 128mb
     restart: always
     healthcheck:
-      disable: false
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+    networks:
+      - default
 
   jellyfin: # Self hosted media server
     image: jellyfin/jellyfin
@@ -67,6 +77,8 @@ services:
         source: ${JELLYFIN_MEDIA_LOCATION}
         target: /media
     restart: always
+    networks:
+      - default
 
   dozzle: # Docker container logs viewer
     image: amir20/dozzle:latest
@@ -76,6 +88,8 @@ services:
       - "5050:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default
 
   glance: # Dashboard for homelab
     container_name: glance
@@ -88,7 +102,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 80:8080
+      - 443:8080
     env_file: .env
+    networks:
+      - default
 
   filebrowser: # File browser for homelab
     image: filebrowser/filebrowser
@@ -100,9 +117,57 @@ services:
       - filebrowser_database:/database
       - filebrowser_config:/config
     restart: always
+    networks:
+      - default
+
+  vikunja:
+    image: vikunja/vikunja:2.1.0
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: http://codingmachine:3456/
+      VIKUNJA_SERVICE_JWTSECRET: 8e3f85dc9c917207cab5ff09c65852de6514f33580d2412d8cf3c20b5760de3b
+      VIKUNJA_DATABASE_HOST: vikunja_db
+      VIKUNJA_DATABASE_PASSWORD: ${VIKUNJA_DB_PASSWORD}
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
+    ports:
+      - 3456:3456
+    volumes:
+      - ./docker-data/vikunja_files:/app/vikunja/files
+    depends_on:
+      vikunja_db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  vikunja_db:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: ${VIKUNJA_DB_PASSWORD}
+      POSTGRES_USER: vikunja
+    volumes:
+      - ~/docker/vikunja_db:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:sts
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker-data/portainer_data:/data
+    ports:
+      - 9443:9443
 
 volumes:
   model-cache:
   filebrowser_data:
   filebrowser_database:
   filebrowser_config:
+
+networks:
+  default:
+    name: homelab_network
