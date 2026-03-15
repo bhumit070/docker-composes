@@ -122,6 +122,7 @@ services:
 
   vikunja:
     image: vikunja/vikunja:2.1.0
+    container_name: vikunja
     environment:
       VIKUNJA_SERVICE_PUBLICURL: http://codingmachine:3456/
       VIKUNJA_SERVICE_JWTSECRET: 8e3f85dc9c917207cab5ff09c65852de6514f33580d2412d8cf3c20b5760de3b
@@ -143,6 +144,7 @@ services:
 
   vikunja_db:
     image: postgres:18
+    container_name: vikunja_db
     environment:
       POSTGRES_PASSWORD: ${VIKUNJA_DB_PASSWORD}
       POSTGRES_USER: vikunja
