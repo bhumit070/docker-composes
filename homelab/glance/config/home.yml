@@ -13,47 +13,51 @@
             - timezone: Asia/Tokyo
               label: Japan
 
-        - type: bookmarks
-          groups:
-            - title: Homelab
-              links:
-              - title: Jellyfin
-                url: http://codingmachine:8096
-                icon: si:jellyfin
-
-              - title: Photos
-                url: http://codingmachine:2283
-                icon: si:immich
-
-              - title: qBittorrent
-                url: http://codingmachine:5678
-                icon: si:qbittorrent
-
-              - title: Dozzle
-                url: http://codingmachine:5050
-                icon: si:docker
-
-              - title: Portainer
-                url: https://codingmachine:9443
-                icon: si:docker
-
-              - title: FileBrowser
-                url: http://codingmachine:8080
-                icon: si:files
-
-              - title: Linkedin Post Generator
-                url: http://codingmachine:5701
-                icon: si:postiz
-
-              - title: Task management
-                url: http://codingmachine:3456
-                icon: si:todoist
-
     - size: full
       widgets:
         - type: iframe
           source: http://codingmachine:5050/
-          height: 400
+          height: 300
+
+        - type: bookmarks
+          groups:
+            - title: Media
+              links:
+                - title: Jellyfin
+                  url: http://codingmachine:8096
+                  icon: si:jellyfin
+
+                - title: Photos
+                  url: http://codingmachine:2283
+                  icon: si:immich
+
+                - title: qBittorrent
+                  url: http://codingmachine:5678
+                  icon: si:qbittorrent
+
+            - title: Productivity
+              links:
+                - title: FileBrowser
+                  url: http://codingmachine:8080
+                  icon: si:files
+
+                - title: Linkedin Post Generator
+                  url: http://codingmachine:5701
+                  icon: si:postiz
+
+                - title: Task management
+                  url: http://codingmachine:3456
+                  icon: si:todoist
+
+            - title: Docker
+              links:
+                - title: Dozzle
+                  url: http://codingmachine:5050
+                  icon: si:docker
+
+                - title: Portainer
+                  url: https://codingmachine:9443
+                  icon: si:docker
 
         - type: docker-containers
           hide-by-default: false
@@ -80,7 +84,6 @@
       widgets:
         - type: group
           widgets:
-
             - type: reddit
               subreddit: developersIndia
               show-thumbnails: true
