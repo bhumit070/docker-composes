@@ -27,6 +27,10 @@
                   url: http://codingmachine:8096
                   icon: si:jellyfin
 
+                - title: Music Player ( navidrome )
+                  url: http://codingmachine:4533
+                  icon: si:youtubemusic
+
                 - title: Photos
                   url: http://codingmachine:2283
                   icon: si:immich

@@ -183,6 +183,16 @@ services:
     networks:
       - default
 
+  navidrome: # Music Player
+    container_name: navidrome
+    image: deluan/navidrome:pr-5218
+    ports:
+      - "4533:4533"
+    restart: always
+    volumes:
+      - "./docker-data/navidrome:/data"
+      - "${NAVIDROME_MUSIC_PATH}:/music:ro"
+
 volumes:
   model-cache:
   filebrowser_data:
