@@ -1,7 +1,7 @@
 name: homelab
 
 services:
-  immich-server: # Self hosted photos
+  immich_server: # Self hosted photos
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
@@ -11,10 +11,11 @@ services:
       - .env
     environment:
       - DB_HOSTNAME=immich_postgres
+      - REDIS_HOSTNAME=immich_redis
     ports:
       - "2283:2283"
     depends_on:
-      - redis
+      - immich_redis
       - immich_postgres
     restart: always
     healthcheck:
@@ -22,7 +23,7 @@ services:
     networks:
       - default
 
-  immich-machine-learning:
+  immich_machine_learning:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
     volumes:
@@ -35,7 +36,7 @@ services:
     networks:
       - default
 
-  redis:
+  immich_redis:
     container_name: immich_redis
     image: docker.io/valkey/valkey:9@sha256:546304417feac0874c3dd576e0952c6bb8f06bb4093ea0c9ca303c73cf458f63
     healthcheck:
@@ -65,7 +66,7 @@ services:
       - default
 
   jellyfin: # Self hosted media server
-    image: jellyfin/jellyfin:10.11.6
+    image: jellyfin/jellyfin@sha256:333b647716631443a43c7fabac4b0c46b4e2f036bad19547e00958f10f721b85
     container_name: jellyfin
     ports:
       - 8096:8096/tcp
@@ -81,7 +82,7 @@ services:
       - default
 
   dozzle: # Docker container logs viewer
-    image: amir20/dozzle:latest
+    image: amir20/dozzle@sha256:223175f09a979f9eb007d46c8314304f4510832cc0a0c85ae42be63b41cb2636
     container_name: dozzle
     restart: always
     ports:
@@ -93,7 +94,7 @@ services:
 
   glance: # Dashboard for homelab
     container_name: glance
-    image: glanceapp/glance
+    image: glanceapp/glance@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
     restart: unless-stopped
     volumes:
       - ./glance/config/:/app/config
@@ -108,20 +109,20 @@ services:
       - default
 
   filebrowser: # File browser for homelab
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser@sha256:a1d6addab1b8335d807088f869e5cd17773b99d922c8d63de45ef0fa23a9c35a
     container_name: filebrowser
     ports:
       - "8080:80"
     volumes:
       - /:/srv
-      - filebrowser_database:/database
-      - filebrowser_config:/config
+      - ./docker_data/filebrowser_database:/database
+      - ./docker_data/filebrowser_config:/config
     restart: always
     networks:
       - default
 
   vikunja:
-    image: vikunja/vikunja:2.1.0
+    image: vikunja/vikunja@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
     container_name: vikunja
     environment:
       VIKUNJA_SERVICE_PUBLICURL: http://codingmachine:3456/
@@ -134,7 +135,7 @@ services:
     ports:
       - 3456:3456
     volumes:
-      - ./docker-data/vikunja_files:/app/vikunja/files
+      - ./docker_data/vikunja_files:/app/vikunja/files
     depends_on:
       vikunja_db:
         condition: service_healthy
@@ -143,7 +144,7 @@ services:
       - default
 
   vikunja_db:
-    image: postgres:18
+    image: postgres@sha256:a9abf4275f9e99bff8e6aed712b3b7dfec9cac1341bba01c1ffdfce9ff9fc34a
     container_name: vikunja_db
     environment:
       POSTGRES_PASSWORD: ${VIKUNJA_DB_PASSWORD}
@@ -160,18 +161,18 @@ services:
 
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:sts
+    image: portainer/portainer-ce@sha256:1ae8e65d50ca5498cb2c33e617495a1e3ef245b0d2392b4a44c70ae09b822891
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker-data/portainer_data:/data
+      - ./docker_data/portainer_data:/data
     ports:
       - 9443:9443
     networks:
       - default
 
   nginx:
-    image: nginx:1.29.6
+    image: nginx@sha256:dead9cf6bae3a0447c3148dd1afb374a3c8339b8875298bd3130387f64abf879
     container_name: nginx
     ports:
       - "80:80"
@@ -185,12 +186,12 @@ services:
 
   navidrome: # Music Player
     container_name: navidrome
-    image: deluan/navidrome:pr-5218
+    image: deluan/navidrome@sha256:b727edf8e091ad84106218dbd3517772cff9803bf67bbedb934f8a0c26cec495
     ports:
       - "4533:4533"
     restart: always
     volumes:
-      - "./docker-data/navidrome:/data"
+      - "./docker_data/navidrome:/data"
       - "${NAVIDROME_MUSIC_PATH}:/music:ro"
 
 volumes:

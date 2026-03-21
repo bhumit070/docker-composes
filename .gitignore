@@ -83,4 +83,4 @@ jellyfin-config
 # this is for immich
 library 
 
-docker-data
+docker_data
