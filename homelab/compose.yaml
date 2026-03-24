@@ -186,13 +186,25 @@ services:
 
   navidrome: # Music Player
     container_name: navidrome
-    image: deluan/navidrome@sha256:b727edf8e091ad84106218dbd3517772cff9803bf67bbedb934f8a0c26cec495
+    image: deluan/navidrome@sha256:9089cac8f8bfa27f35a2ba6532071e659a1a565dff0bb1ed4661715f8ebd887d
     ports:
       - "4533:4533"
     restart: always
     volumes:
       - "./docker_data/navidrome:/data"
       - "${NAVIDROME_MUSIC_PATH}:/music:ro"
+
+  kavita: # Book reader
+    image: jvmilazz0/kavita@sha256:2c134b9d9a0db27f68282d3cd55dc2733331020e9df9f3baabddad74e6cbab2c
+    container_name: kavita
+    volumes:
+        - ${KAVITA_BOOKS_COLLECTION_LOCATION}:/books
+        - ./docker_data/kavita_config:/kavita/config
+    environment:
+        - TZ=${TZ}
+    ports:
+        - "5000:5000"
+    restart: always
 
 volumes:
   model-cache:

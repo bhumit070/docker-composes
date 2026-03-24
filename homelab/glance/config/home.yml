@@ -39,6 +39,10 @@
                   url: http://codingmachine:5678
                   icon: si:qbittorrent
 
+                - title: Books
+                  url: http://codingmachine:5000
+                  icon: si:bookstack
+
             - title: Productivity
               links:
                 - title: FileBrowser
