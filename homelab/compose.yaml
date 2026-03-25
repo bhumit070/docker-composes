@@ -12,6 +12,7 @@ services:
     environment:
       - DB_HOSTNAME=immich_postgres
       - REDIS_HOSTNAME=immich_redis
+      - IMMICH_MACHINE_LEARNING_URL=http://immich_machine_learning:3003
     ports:
       - "2283:2283"
     depends_on:
