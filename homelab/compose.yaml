@@ -80,6 +80,12 @@ services:
     restart: always
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   dozzle: # Docker container logs viewer
     image: amir20/dozzle@sha256:223175f09a979f9eb007d46c8314304f4510832cc0a0c85ae42be63b41cb2636
@@ -91,6 +97,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "/dozzle", "healthcheck"]
+      interval: 3s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
   glance: # Dashboard for homelab
     container_name: glance
@@ -101,12 +113,15 @@ services:
       - ./glance/assets/:/app/assets
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    #ports:
-    #  - 80:8080
-    #  - 443:8080
     env_file: .env
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   filebrowser: # File browser for homelab
     image: filebrowser/filebrowser@sha256:a1d6addab1b8335d807088f869e5cd17773b99d922c8d63de45ef0fa23a9c35a
@@ -142,6 +157,12 @@ services:
     restart: unless-stopped
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "/app/vikunja/vikunja", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   vikunja_db:
     image: postgres@sha256:a9abf4275f9e99bff8e6aed712b3b7dfec9cac1341bba01c1ffdfce9ff9fc34a
@@ -170,6 +191,13 @@ services:
       - 9443:9443
     networks:
       - default
+    healthcheck:
+      test: ['CMD', '/portainer', '--help']
+      interval: 2s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
 
   nginx:
     image: nginx@sha256:dead9cf6bae3a0447c3148dd1afb374a3c8339b8875298bd3130387f64abf879
@@ -199,6 +227,12 @@ services:
     volumes:
       - "./docker_data/navidrome:/data"
       - "${NAVIDROME_MUSIC_PATH}:/music:ro"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:4533"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   kavita: # Book reader
     image: jvmilazz0/kavita@sha256:2c134b9d9a0db27f68282d3cd55dc2733331020e9df9f3baabddad74e6cbab2c
