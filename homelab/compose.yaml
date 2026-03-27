@@ -219,22 +219,6 @@ services:
       retries: 3
       start_period: 20s
 
-  navidrome: # Music Player
-    container_name: navidrome
-    image: deluan/navidrome@sha256:9089cac8f8bfa27f35a2ba6532071e659a1a565dff0bb1ed4661715f8ebd887d
-    ports:
-      - "4533:4533"
-    restart: always
-    volumes:
-      - "./docker_data/navidrome:/data"
-      - "${NAVIDROME_MUSIC_PATH}:/music:ro"
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:4533"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-
   kavita: # Book reader
     image: jvmilazz0/kavita@sha256:2c134b9d9a0db27f68282d3cd55dc2733331020e9df9f3baabddad74e6cbab2c
     container_name: kavita
