@@ -193,12 +193,11 @@ services:
     networks:
       - default
     healthcheck:
-      test: ['CMD', '/portainer', '--help']
+      test: ["CMD", "/portainer", "--help"]
       interval: 2s
       timeout: 10s
       retries: 3
       start_period: 30s
-
 
   nginx:
     image: nginx@sha256:dead9cf6bae3a0447c3148dd1afb374a3c8339b8875298bd3130387f64abf879
@@ -223,12 +222,12 @@ services:
     image: jvmilazz0/kavita@sha256:2c134b9d9a0db27f68282d3cd55dc2733331020e9df9f3baabddad74e6cbab2c
     container_name: kavita
     volumes:
-        - ${KAVITA_BOOKS_COLLECTION_LOCATION}:/books
-        - ./docker_data/kavita_config:/kavita/config
+      - ${KAVITA_BOOKS_COLLECTION_LOCATION}:/books
+      - ./docker_data/kavita_config:/kavita/config
     environment:
-        - TZ=${TZ}
+      - TZ=${TZ}
     ports:
-        - "5000:5000"
+      - "5000:5000"
     restart: always
 
 volumes:
