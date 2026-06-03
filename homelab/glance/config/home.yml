@@ -39,6 +39,10 @@
                   url: http://codingmachine:5000
                   icon: si:bookstack
 
+                - title: Youtube to RSS
+                  url: https://vimrss.com/tool/youtube-to-rss
+                  icon: si:youtube
+
             - title: Productivity
               links:
                 - title: FileBrowser
@@ -71,6 +75,7 @@
     - size: full
       widgets:
         - type: videos
+          title: Tech Videos
           limit: 100
           channels:
             - UC5--wS0Ljbin1TjWQX6eafA # bigboxSWE
@@ -81,7 +86,15 @@
             - UCyxmnhV5Qv7foKM7ZrF5V0w # Akshay Dixit
             - UCYeiozh-4QwuC1sjgCmB92w # DevOps Toolbox
             - UCbuj4kbjP05NLiWUbpSuBPw # Monkey Magic
-          style: grid-cards
+          style: horizontal-cards
+
+        - type: videos
+          title: Vlogs
+          limit: 100
+          channels:
+            - UCbuj4kbjP05NLiWUbpSuBPw # Monkey Magic
+            - UCaO19EP1T3m61v7lhXO0Cfg # Ajay Pandey
+          style: horizontal-cards
 
 - name: Reddit
   columns:
