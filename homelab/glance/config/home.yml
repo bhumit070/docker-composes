@@ -95,6 +95,14 @@
             - UCaO19EP1T3m61v7lhXO0Cfg # Ajay Pandey
           style: horizontal-cards
 
+        - type: videos
+          title: Food Channels
+          channels:
+            - UCBB-MPp_uyVPJBsIO7vfe2Q # Viwa Food World
+            - UC4JYGJD8NGcfBINhYxsMp8w # AayushSapradaily
+            - UC2UWtuZR3kH-5C26HVMMB6A # AayushSapra
+            - UCp57W-eQjbYUPJuTMEfbf1Q # CountingUnique
+
 - name: Reddit
   columns:
     - size: full
