@@ -70,7 +70,7 @@
         - type: docker-containers
           hide-by-default: false
 
-- name: Youtube # Somehow make it full screen
+- name: Youtube-By-Category
   columns:
     - size: full
       widgets:
@@ -85,6 +85,14 @@
             - UCbRP3c757lWg9M-U7TyEkXA # Theo - t3.gg
             - UCyxmnhV5Qv7foKM7ZrF5V0w # Akshay Dixit
             - UCYeiozh-4QwuC1sjgCmB92w # DevOps Toolbox
+          style: horizontal-cards
+
+        - type: videos
+          title: Infotaitment
+          limit: 100
+          channels:
+            - UCHnyfMqiRRG1u-2MsSQLbXA #Veritasium
+            - UCHYoe8kQ-7Gn9ASOlmI0k6Q # The Food Theorists
           style: horizontal-cards
 
         - type: videos
@@ -103,23 +111,30 @@
             - UC2UWtuZR3kH-5C26HVMMB6A # AayushSapra
             - UCp57W-eQjbYUPJuTMEfbf1Q # CountingUnique
 
-- name: Reddit
+- name: Youtube-Feed
+  width: wide
+
   columns:
     - size: full
       widgets:
-        - type: group
-          widgets:
-            - type: reddit
-              subreddit: developersIndia
-              show-thumbnails: true
-              limit: 100
+        - type: videos
+          style: grid-cards
+          limit: 10000000
+          collapse-after-rows: 4
 
-            - type: reddit
-              subreddit: headphones
-              show-thumbnails: true
-              limit: 100
-
-            - type: reddit
-              subreddit: headphonesindia
-              show-thumbnails: true
-              limit: 100
+          channels:
+            - UC5--wS0Ljbin1TjWQX6eafA # bigboxSWE
+            - UC_b1GUJv_2QiMP4BxC9-Dxg # Arpit Bhayani
+            - UCJUmE61LxhbhudzUugHL2wQ # Mehul - Codedamn
+            - UCzF68Hu6AqrqX_p-HHwZDqg # Mehul Mohan
+            - UCbRP3c757lWg9M-U7TyEkXA # Theo - t3.gg
+            - UCyxmnhV5Qv7foKM7ZrF5V0w # Akshay Dixit
+            - UCYeiozh-4QwuC1sjgCmB92w # DevOps Toolbox
+            - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+            - UCHYoe8kQ-7Gn9ASOlmI0k6Q # The Food Theorists
+            - UCbuj4kbjP05NLiWUbpSuBPw # Monkey Magic
+            - UCaO19EP1T3m61v7lhXO0Cfg # Ajay Pandey
+            - UCBB-MPp_uyVPJBsIO7vfe2Q # Viwa Food World
+            - UC4JYGJD8NGcfBINhYxsMp8w # AayushSapraDaily
+            - UC2UWtuZR3kH-5C26HVMMB6A # AayushSapra
+            - UCp57W-eQjbYUPJuTMEfbf1Q # CountingUnique
