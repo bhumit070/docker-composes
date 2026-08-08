@@ -65,6 +65,10 @@
                   url: https://design.bhumit070.bid
                   icon: si:penpot
 
+                - title: Stirling PDF
+                  url: http://codingmachine:3030
+                  icon: si:ilovepdf
+
             - title: Docker
               links:
                 - title: Dozzle

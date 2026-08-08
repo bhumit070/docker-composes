@@ -416,6 +416,20 @@ services:
       start_period: 3s
     networks:
       - default
+
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf@sha256:aa91c68b85992986302fbdb6735f2c0824e329304e43c814a9b77c9dd0dbe410
+    container_name: stirling-pdf
+    restart: unless-stopped
+    ports:
+      - "3030:8080"
+    volumes:
+      - ./docker_data/stirling-pdf/trainingData:/usr/share/tessdata
+      - ./docker_data/stirling-pdf/extraConfigs:/configs
+      - ./docker_data/stirling-pdf/customFiles:/customFiles
+      - ./docker_data/stirling-pdf/logs:/logs
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
 volumes:
   model-cache:
   filebrowser_data:
