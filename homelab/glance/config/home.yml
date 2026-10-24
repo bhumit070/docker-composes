@@ -16,7 +16,7 @@
     - size: full
       widgets:
         - type: iframe
-          source: http://dozzle.bhumit070.bid/
+          source: https://dozzle.bhumit070.bid/
           height: 300
 
         - type: bookmarks
@@ -24,15 +24,15 @@
             - title: Media
               links:
                 - title: Jellyfin
-                  url: http://media.bhumit070.bid
+                  url: https://media.bhumit070.bid
                   icon: si:jellyfin
 
                 - title: Jellystat
-                  url: http://jellystat.bhumit070.bid
+                  url: https://jellystat.bhumit070.bid
                   icon: si:jellyfin
 
                 - title: Photos
-                  url: http://photos.bhumit070.bid
+                  url: https://photos.bhumit070.bid
                   icon: si:immich
 
                 - title: qBittorrent
@@ -40,7 +40,7 @@
                   icon: si:qbittorrent
 
                 - title: Books
-                  url: http://books.bhumit070.bid
+                  url: https://books.bhumit070.bid
                   icon: si:bookstack
 
                 - title: Youtube to RSS
@@ -50,7 +50,7 @@
             - title: Productivity
               links:
                 - title: FileBrowser
-                  url: http://files.bhumit070.bid
+                  url: https://files.bhumit070.bid
                   icon: si:files
 
                 - title: Linkedin Post Generator
@@ -58,17 +58,17 @@
                   icon: si:postiz
 
                 - title: Task management
-                  url: http://tasks.bhumit070.bid
+                  url: https://tasks.bhumit070.bid
                   icon: si:todoist
 
             - title: Docker
               links:
                 - title: Dozzle
-                  url: http://dozzle.bhumit070.bid
+                  url: https://dozzle.bhumit070.bid
                   icon: si:docker
 
                 - title: Portainer
-                  url: http://portainer.bhumit070.bid
+                  url: https://portainer.bhumit070.bid
                   icon: si:docker
 
         - type: docker-containers

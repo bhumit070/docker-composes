@@ -143,7 +143,7 @@ services:
     image: vikunja/vikunja@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
     container_name: vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: http://tasks.bhumit070.bid/
+      VIKUNJA_SERVICE_PUBLICURL: https://tasks.bhumit070.bid/
       VIKUNJA_SERVICE_JWTSECRET: 8e3f85dc9c917207cab5ff09c65852de6514f33580d2412d8cf3c20b5760de3b
       VIKUNJA_DATABASE_HOST: vikunja_db
       VIKUNJA_DATABASE_PASSWORD: ${VIKUNJA_DB_PASSWORD}
@@ -201,6 +201,35 @@ services:
       retries: 3
       start_period: 30s
 
+  certbot: # Let's Encrypt wildcard cert for *.bhumit070.bid via Cloudflare DNS
+    image: certbot/dns-cloudflare@sha256:c45edb002b883da1a1235abb205dff474a7a1a459d878e8d5fdc7f9d83073aea
+    container_name: certbot
+    volumes:
+      - ./docker_data/letsencrypt:/etc/letsencrypt
+      - ./docker_data/certbot/cloudflare.ini:/cloudflare.ini:ro
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        trap exit TERM
+        if [ ! -f /etc/letsencrypt/live/bhumit070.bid/fullchain.pem ]; then
+          certbot certonly --non-interactive --agree-tos --register-unsafely-without-email \
+            --dns-cloudflare --dns-cloudflare-credentials /cloudflare.ini \
+            --dns-cloudflare-propagation-seconds 30 \
+            --cert-name bhumit070.bid -d bhumit070.bid -d '*.bhumit070.bid' || exit 1
+        fi
+        while :; do
+          certbot renew --quiet
+          sleep 12h & wait $$!
+        done
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "test", "-f", "/etc/letsencrypt/live/bhumit070.bid/fullchain.pem"]
+      interval: 10s
+      start_period: 180s
+    networks:
+      - default
+
   nginx:
     image: nginx@sha256:dead9cf6bae3a0447c3148dd1afb374a3c8339b8875298bd3130387f64abf879
     container_name: nginx
@@ -210,6 +239,12 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./docker_data/letsencrypt:/etc/letsencrypt:ro
+    # Reload every 6h so renewed certificates are picked up
+    command: ["/bin/sh", "-c", "while :; do sleep 6h & wait $$!; nginx -s reload; done & exec nginx -g 'daemon off;'"]
+    depends_on:
+      certbot:
+        condition: service_healthy
     restart: always
     networks:
       - default
