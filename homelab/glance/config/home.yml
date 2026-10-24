@@ -16,7 +16,7 @@
     - size: full
       widgets:
         - type: iframe
-          source: http://codingmachine:5050/
+          source: http://dozzle.bhumit070.bid/
           height: 300
 
         - type: bookmarks
@@ -24,11 +24,15 @@
             - title: Media
               links:
                 - title: Jellyfin
-                  url: http://codingmachine:8096
+                  url: http://media.bhumit070.bid
+                  icon: si:jellyfin
+
+                - title: Jellystat
+                  url: http://jellystat.bhumit070.bid
                   icon: si:jellyfin
 
                 - title: Photos
-                  url: http://codingmachine:2283
+                  url: http://photos.bhumit070.bid
                   icon: si:immich
 
                 - title: qBittorrent
@@ -36,7 +40,7 @@
                   icon: si:qbittorrent
 
                 - title: Books
-                  url: http://codingmachine:5000
+                  url: http://books.bhumit070.bid
                   icon: si:bookstack
 
                 - title: Youtube to RSS
@@ -46,7 +50,7 @@
             - title: Productivity
               links:
                 - title: FileBrowser
-                  url: http://codingmachine:8080
+                  url: http://files.bhumit070.bid
                   icon: si:files
 
                 - title: Linkedin Post Generator
@@ -54,17 +58,17 @@
                   icon: si:postiz
 
                 - title: Task management
-                  url: http://codingmachine:3456
+                  url: http://tasks.bhumit070.bid
                   icon: si:todoist
 
             - title: Docker
               links:
                 - title: Dozzle
-                  url: http://codingmachine:5050
+                  url: http://dozzle.bhumit070.bid
                   icon: si:docker
 
                 - title: Portainer
-                  url: https://codingmachine:9443
+                  url: http://portainer.bhumit070.bid
                   icon: si:docker
 
         - type: docker-containers

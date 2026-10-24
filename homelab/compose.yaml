@@ -143,7 +143,7 @@ services:
     image: vikunja/vikunja@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
     container_name: vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: http://codingmachine:3456/
+      VIKUNJA_SERVICE_PUBLICURL: http://tasks.bhumit070.bid/
       VIKUNJA_SERVICE_JWTSECRET: 8e3f85dc9c917207cab5ff09c65852de6514f33580d2412d8cf3c20b5760de3b
       VIKUNJA_DATABASE_HOST: vikunja_db
       VIKUNJA_DATABASE_PASSWORD: ${VIKUNJA_DB_PASSWORD}

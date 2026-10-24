@@ -10,18 +10,19 @@ This setup uses Docker Compose to orchestrate various services, ranging from med
 
 Here is a list of services deployed in this homelab:
 
-| Service | Description | Exposed Port(s) |
-| :--- | :--- | :--- |
-| **[Immich](https://immich.app/)** | High-performance self-hosted photo and video backup solution. | `2283` |
-| **[Jellyfin](https://jellyfin.org/)** | Free Software Media System for streaming media. | `8096` (TCP), `7359` (UDP) |
-| **[Dozzle](https://dozzle.dev/)** | Real-time log viewer for Docker containers. | `5050` |
-| **[Glance](https://github.com/glanceapp/glance)** | A self-hosted dashboard for your homelab. | Internal |
-| **[Filebrowser](https://filebrowser.org/)** | Web-based file manager. | `8080` |
-| **[Vikunja](https://vikunja.io/)** | Open-source, self-hosted to-do app. | `3456` |
-| **[Portainer](https://www.portainer.io/)** | Universal container management platform. | `9443` |
-| **[Nginx](https://nginx.org/)** | High-performance web server and reverse proxy. | `80`, `443` |
-| **[Navidrome](https://www.navidrome.org/)** | Modern Music Server and Streamer compatible with Subsonic/Airsonic. | `4533` |
-| **[Kavita](https://www.kavitareader.com/)** | Fast, feature-rich, cross-platform reading server (Manga/Comics/Books). | `5000` |
+| Service | Description | URL | Exposed Port(s) |
+| :--- | :--- | :--- | :--- |
+| **[Immich](https://immich.app/)** | High-performance self-hosted photo and video backup solution. | http://photos.bhumit070.bid | `2283` |
+| **[Jellyfin](https://jellyfin.org/)** | Free Software Media System for streaming media. | http://media.bhumit070.bid | `8096` (TCP), `7359` (UDP) |
+| **[Dozzle](https://dozzle.dev/)** | Real-time log viewer for Docker containers. | http://dozzle.bhumit070.bid | `5050` |
+| **[Glance](https://github.com/glanceapp/glance)** | A self-hosted dashboard for your homelab. | http://dashboard.bhumit070.bid | Internal |
+| **[Filebrowser](https://filebrowser.org/)** | Web-based file manager. | http://files.bhumit070.bid | `8080` |
+| **[Vikunja](https://vikunja.io/)** | Open-source, self-hosted to-do app. | http://tasks.bhumit070.bid | `3456` |
+| **[Portainer](https://www.portainer.io/)** | Universal container management platform. | http://portainer.bhumit070.bid | `9443` |
+| **[Nginx](https://nginx.org/)** | High-performance web server and reverse proxy. | - | `80`, `443` |
+| **[Navidrome](https://www.navidrome.org/)** | Modern Music Server and Streamer compatible with Subsonic/Airsonic. | - | `4533` |
+| **[Jellystat](https://github.com/CyferShepard/Jellystat)** | Statistics for Jellyfin. | http://jellystat.bhumit070.bid | `3000` |
+| **[Kavita](https://www.kavitareader.com/)** | Fast, feature-rich, cross-platform reading server (Manga/Comics/Books). | http://books.bhumit070.bid | `5000` |
 
 ---
 
@@ -57,6 +58,12 @@ KAVITA_BOOKS_COLLECTION_LOCATION="/media/bhumit070/Data/media/books/"
 ```
 
 *Note: Change the paths like `/media/bhumit070/Data/...` and database passwords to match your system and desired security requirements.*
+
+## Domains
+
+Every app has its own subdomain of `bhumit070.bid`. A Cloudflare DNS record `*` (type A, **DNS only**, not proxied) points to the Tailscale IP of `codingmachine`, so the apps are only reachable from devices on the tailnet. Nginx routes each subdomain to its container via `nginx/conf.d/<app>.conf`; shared proxy settings live in `nginx/conf.d/proxy_params.inc`. `http://codingmachine` and any unknown host fall back to Glance.
+
+To add an app, copy one of the files in `nginx/conf.d/`, change `server_name` and `proxy_pass`, then run `docker compose restart nginx`.
 
 ## Directories & Volumes Structure
 
