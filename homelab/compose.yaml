@@ -67,7 +67,7 @@ services:
       - default
 
   jellyfin: # Self hosted media server
-    image: jellyfin/jellyfin@sha256:333b647716631443a43c7fabac4b0c46b4e2f036bad19547e00958f10f721b85
+    image: jellyfin/jellyfin@sha256:baba630419915985442f315f08b0cf46d9f4c8a0cc4bd38e94a6d35751dd5ef5
     container_name: jellyfin
     ports:
       - 8096:8096/tcp
