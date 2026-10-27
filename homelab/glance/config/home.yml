@@ -61,6 +61,10 @@
                   url: https://tasks.bhumit070.bid
                   icon: si:todoist
 
+                - title: Penpot
+                  url: https://design.bhumit070.bid
+                  icon: si:penpot
+
             - title: Docker
               links:
                 - title: Dozzle

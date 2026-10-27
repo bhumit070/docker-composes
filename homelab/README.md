@@ -24,6 +24,7 @@ Here is a list of services deployed in this homelab:
 | **[Navidrome](https://www.navidrome.org/)** | Modern Music Server and Streamer compatible with Subsonic/Airsonic. | - | `4533` |
 | **[Jellystat](https://github.com/CyferShepard/Jellystat)** | Statistics for Jellyfin. | https://jellystat.bhumit070.bid | `3000` |
 | **[Kavita](https://www.kavitareader.com/)** | Fast, feature-rich, cross-platform reading server (Manga/Comics/Books). | https://books.bhumit070.bid | `5000` |
+| **[Penpot](https://penpot.app/)** | Open-source design and prototyping platform. | https://design.bhumit070.bid | `9001` |
 
 ---
 
@@ -56,6 +57,10 @@ NAVIDROME_MUSIC_PATH="/media/bhumit070/Data/media/music"
 
 # KAVITA ENV
 KAVITA_BOOKS_COLLECTION_LOCATION="/media/bhumit070/Data/media/books/"
+
+# PENPOT ENV
+PENPOT_SECRET_KEY="generate_with_openssl_rand_hex_32"
+PENPOT_DB_PASSWORD="your_secure_password"
 ```
 
 *Note: Change the paths like `/media/bhumit070/Data/...` and database passwords to match your system and desired security requirements.*
