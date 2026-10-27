@@ -84,3 +84,5 @@ jellyfin-config
 library 
 
 docker_data
+# secrets
+.env

@@ -392,7 +392,7 @@ services:
       POSTGRES_USER: penpot
       POSTGRES_PASSWORD: ${PENPOT_DB_PASSWORD}
     volumes:
-      - ./docker_data/penpot_postgres:/var/lib/postgresql/data
+      - ~/docker/penpot_postgres:/var/lib/postgresql/data # off NTFS: postgres needs chown/chmod
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U penpot"]
       interval: 2s
