@@ -140,7 +140,7 @@ services:
       FB_TOKEN_EXPIRATION_TIME: 24h
 
   vikunja:
-    image: vikunja/vikunja@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
+    image: vikunja/vikunja@sha256:e2204a1c1c6a81e833c2b3a5442be182ca2335b54c2e7e37578cc3fe12a27cfc # 2.7.0
     container_name: vikunja
     environment:
       VIKUNJA_SERVICE_PUBLICURL: https://tasks.bhumit070.bid/
@@ -331,8 +331,9 @@ services:
     depends_on:
       - penpot-backend
       - penpot-exporter
+      - penpot-mcp
     environment:
-      PENPOT_FLAGS: ${PENPOT_FLAGS:-disable-email-verification}
+      PENPOT_FLAGS: ${PENPOT_FLAGS:-disable-email-verification enable-access-tokens enable-mcp}
       PENPOT_PUBLIC_URI: https://design.bhumit070.bid
       PENPOT_HTTP_SERVER_MAX_BODY_SIZE: 367001600
       PENPOT_HTTP_SERVER_MAX_MULTIPART_BODY_SIZE: 367001600
@@ -351,7 +352,7 @@ services:
       penpot-valkey:
         condition: service_healthy
     environment:
-      PENPOT_FLAGS: ${PENPOT_FLAGS:-disable-email-verification}
+      PENPOT_FLAGS: ${PENPOT_FLAGS:-disable-email-verification enable-access-tokens enable-mcp}
       PENPOT_PUBLIC_URI: https://design.bhumit070.bid
       PENPOT_SECRET_KEY: ${PENPOT_SECRET_KEY}
       PENPOT_HTTP_SERVER_MAX_BODY_SIZE: 367001600
@@ -378,6 +379,18 @@ services:
       PENPOT_PUBLIC_URI: https://design.bhumit070.bid
       PENPOT_INTERNAL_URI: http://penpot-frontend:8080
       PENPOT_REDIS_URI: redis://penpot-valkey/0
+    networks:
+      - default
+
+  penpot-mcp: # MCP server so AI clients (Claude) can drive Penpot, proxied at /mcp/ by penpot-frontend
+    image: penpotapp/mcp@sha256:61fc7b2b727593670159966998fb197b2d282330ec7dbffc09a3e6374e0ce39d # 2.18.5
+    container_name: penpot-mcp
+    restart: unless-stopped
+    depends_on:
+      penpot-valkey:
+        condition: service_healthy
+    environment:
+      PENPOT_MCP_REDIS_URI: redis://penpot-valkey/0
     networks:
       - default
 
