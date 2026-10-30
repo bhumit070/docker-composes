@@ -21,6 +21,8 @@ Bring everything up with the user's alias `dcu` (`docker compose --env-file .env
   once, at startup/reload, and cache it. When the container is recreated it gets a new IP and
   nginx returns 502 until reloaded. The variable form uses the Docker DNS `resolver 127.0.0.11`
   in `nginx.conf`, so new IPs are picked up automatically. Keep this pattern for new sites.
+- Services with a domain publish **no host ports**: reach them only via nginx (HTTPS).
+  Only nginx (80/443) and jellyfin's 7359/udp client discovery are published.
 - New `conf.d` files are only loaded on reload: `docker exec nginx nginx -s reload`
   (until then the new subdomain fails TLS with "unrecognized name").
 

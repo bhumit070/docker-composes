@@ -66,7 +66,7 @@
                   icon: si:penpot
 
                 - title: Stirling PDF
-                  url: http://codingmachine:3030
+                  url: https://pdf.bhumit070.bid
                   icon: si:ilovepdf
 
             - title: Docker

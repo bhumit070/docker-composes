@@ -13,8 +13,6 @@ services:
       - DB_HOSTNAME=immich_postgres
       - REDIS_HOSTNAME=immich_redis
       - IMMICH_MACHINE_LEARNING_URL=http://immich_machine_learning:3003
-    ports:
-      - "2283:2283"
     depends_on:
       - immich_redis
       - immich_postgres
@@ -70,7 +68,6 @@ services:
     image: jellyfin/jellyfin@sha256:baba630419915985442f315f08b0cf46d9f4c8a0cc4bd38e94a6d35751dd5ef5
     container_name: jellyfin
     ports:
-      - 8096:8096/tcp
       - 7359:7359/udp
     volumes:
       - ./jellyfin-config:/config
@@ -92,8 +89,6 @@ services:
     image: amir20/dozzle@sha256:223175f09a979f9eb007d46c8314304f4510832cc0a0c85ae42be63b41cb2636
     container_name: dozzle
     restart: always
-    ports:
-      - "5050:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -127,8 +122,6 @@ services:
   filebrowser: # File browser for homelab
     image: filebrowser/filebrowser@sha256:a1d6addab1b8335d807088f869e5cd17773b99d922c8d63de45ef0fa23a9c35a
     container_name: filebrowser
-    ports:
-      - "8080:80"
     volumes:
       - /:/srv
       - ./docker_data/filebrowser_database:/database
@@ -150,8 +143,6 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-    ports:
-      - 3456:3456
     volumes:
       - ./docker_data/vikunja_files:/app/vikunja/files
     depends_on:
@@ -190,8 +181,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./docker_data/portainer_data:/data
-    ports:
-      - 9443:9443
     networks:
       - default
     healthcheck:
@@ -263,8 +252,6 @@ services:
       - ./docker_data/kavita_config:/kavita/config
     environment:
       - TZ=${TZ}
-    ports:
-      - "5000:5000"
     restart: always
 
   jellystat:
@@ -285,8 +272,6 @@ services:
       TZ: Asia/Kolkata # timezone (ex: Europe/Paris)
     volumes:
       - ./docker_data/jellystat_backup_data:/app/backend/backup-data
-    ports:
-      - "3000:3000"
     depends_on:
       jellystat-db:
         condition: service_healthy
@@ -324,8 +309,6 @@ services:
     image: penpotapp/frontend@sha256:9bc0c288985d2d18a2c3e7b849d8edda317e1bfd99ec6dd494e5bfdcfe411f06
     container_name: penpot-frontend
     restart: unless-stopped
-    ports:
-      - "9001:8080"
     volumes:
       - ./docker_data/penpot_assets:/opt/data/assets
     depends_on:
@@ -434,8 +417,6 @@ services:
     image: docker.stirlingpdf.com/stirlingtools/stirling-pdf@sha256:aa91c68b85992986302fbdb6735f2c0824e329304e43c814a9b77c9dd0dbe410
     container_name: stirling-pdf
     restart: unless-stopped
-    ports:
-      - "3030:8080"
     volumes:
       - ./docker_data/stirling-pdf/trainingData:/usr/share/tessdata
       - ./docker_data/stirling-pdf/extraConfigs:/configs
