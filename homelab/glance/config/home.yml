@@ -69,6 +69,10 @@
                   url: https://pdf.bhumit070.bid
                   icon: si:ilovepdf
 
+                - title: Webhooks to Discord
+                  url: https://webhooks.bhumit070.bid
+                  icon: si:discord
+
             - title: Docker
               links:
                 - title: Dozzle
