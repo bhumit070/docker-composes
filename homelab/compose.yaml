@@ -143,6 +143,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_WEBHOOKS_ALLOWNONROUTABLEIPS: "true" # *.bhumit070.bid resolves to a Tailscale (100.64.0.0/10) IP
     volumes:
       - ./docker_data/vikunja_files:/app/vikunja/files
     depends_on:
@@ -424,6 +425,53 @@ services:
       - ./docker_data/stirling-pdf/logs:/logs
     environment:
       - DOCKER_ENABLE_SECURITY=false
+
+  webhooks-frontend: # Send Any Webhook to Discord (UI + ingest), proxies /api, /h, /docs to webhooks-backend
+    image: ghcr.io/bhumit070/send-any-webhook-frontend@sha256:09f838f5b407a6a354ac93bf9de2cf3f1f3452f42c3f567e35f99004a87e4d82
+    container_name: webhooks-frontend
+    restart: unless-stopped
+    depends_on:
+      webhooks-backend:
+        condition: service_healthy
+    networks:
+      - default
+
+  webhooks-backend:
+    image: ghcr.io/bhumit070/send-any-webhook-backend@sha256:c58c91498a3bf732f456f53f30ee7cd66e4eaccb361f11c6b1655fa689c31d20
+    container_name: webhooks-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://send_any_webhook:${WEBHOOKS_DB_PASSWORD}@webhooks-postgres:5432/send_any_webhook
+      APP_SECRET: ${WEBHOOKS_APP_SECRET}
+      PUBLIC_BASE_URL: https://webhooks.bhumit070.bid
+      AUTH_DISABLED: "true" # local network only: every request acts as a single local user
+      TRUST_PROXY_HOPS: 2 # homelab nginx -> webhooks-frontend nginx
+    depends_on:
+      webhooks-postgres:
+        condition: service_healthy
+    networks:
+      default:
+        aliases:
+          - backend # webhooks-frontend's nginx.conf proxies to http://backend:5353
+
+  webhooks-postgres:
+    image: postgres@sha256:10a5c69a83035ab5239f5620d708520e8b28f5aa1f2b20143e6024532edadfb5 # postgres:18-alpine
+    container_name: webhooks-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: send_any_webhook
+      POSTGRES_DB: send_any_webhook
+      POSTGRES_PASSWORD: ${WEBHOOKS_DB_PASSWORD}
+    volumes:
+      - ~/docker/webhooks_postgres:/var/lib/postgresql # off NTFS: postgres needs chown/chmod
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U send_any_webhook -d send_any_webhook"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - default
+
 volumes:
   model-cache:
   filebrowser_data:
