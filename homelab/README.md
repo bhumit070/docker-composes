@@ -26,6 +26,7 @@ Here is a list of services deployed in this homelab:
 | **[Kavita](https://www.kavitareader.com/)** | Fast, feature-rich, cross-platform reading server (Manga/Comics/Books). | https://books.bhumit070.bid | Internal |
 | **[Penpot](https://penpot.app/)** | Open-source design and prototyping platform. | https://design.bhumit070.bid | Internal |
 | **[Stirling PDF](https://www.stirlingpdf.com/)** | Self-hosted toolkit to merge, split, convert and edit PDFs. | https://pdf.bhumit070.bid | Internal |
+| **[Seafile](https://www.seafile.com/)** | File sync and share with desktop/mobile clients. SeaDoc and AI features are disabled. | https://storage.bhumit070.bid | Internal |
 | **[Send Any Webhook to Discord](https://github.com/bhumit070/send-anywebhook-to-discord)** | Receives webhooks from any service (e.g. Vikunja) and relays them to Discord using templates. Auth is disabled (tailnet-only). | https://webhooks.bhumit070.bid | Internal |
 
 ---
@@ -67,6 +68,14 @@ PENPOT_DB_PASSWORD="your_secure_password"
 # SEND ANY WEBHOOK ENV
 WEBHOOKS_DB_PASSWORD="your_secure_password"
 WEBHOOKS_APP_SECRET="generate_with_openssl_rand_hex_32"
+
+# SEAFILE ENV
+SEAFILE_DB_PASSWORD="your_secure_password"
+SEAFILE_DB_ROOT_PASSWORD="your_secure_password"
+SEAFILE_REDIS_PASSWORD="your_secure_password"
+SEAFILE_JWT_PRIVATE_KEY="generate_with_openssl_rand_hex_32"
+SEAFILE_ADMIN_EMAIL="you@example.com"     # first start only
+SEAFILE_ADMIN_PASSWORD="your_secure_password"  # first start only
 ```
 
 *Note: Change the paths like `/media/bhumit070/Data/...` and database passwords to match your system and desired security requirements.*
@@ -113,6 +122,8 @@ Before deploying the stack, ensure the required host directories are available a
 - `~/docker/vikunja_db` (Vikunja database)
 - `~/docker/penpot_postgres` (Penpot database)
 - `~/docker/webhooks_postgres` (Send Any Webhook database)
+- `./docker_data/seafile` (Seafile config, logs and file blocks)
+- `~/docker/seafile_mysql` (Seafile MariaDB database)
 - `./docker_data/stirling-pdf` (Stirling PDF data, config and logs)
 - `./docker_data/portainer_data` (Portainer data)
 - `./nginx/nginx.conf` (Nginx main config)

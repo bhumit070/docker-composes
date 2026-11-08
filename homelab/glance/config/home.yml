@@ -43,20 +43,8 @@
                   url: https://books.bhumit070.bid
                   icon: si:bookstack
 
-                - title: Youtube to RSS
-                  url: https://vimrss.com/tool/youtube-to-rss
-                  icon: si:youtube
-
             - title: Productivity
               links:
-                - title: FileBrowser
-                  url: https://files.bhumit070.bid
-                  icon: si:files
-
-                - title: Linkedin Post Generator
-                  url: http://codingmachine:5701
-                  icon: si:postiz
-
                 - title: Task management
                   url: https://tasks.bhumit070.bid
                   icon: si:todoist
@@ -65,6 +53,18 @@
                   url: https://design.bhumit070.bid
                   icon: si:penpot
 
+            - title: Storage
+              links:
+                - title: Seafile
+                  url: https://storage.bhumit070.bid
+                  icon: si:seafile
+
+                - title: FileBrowser
+                  url: https://files.bhumit070.bid
+                  icon: si:files
+
+            - title: Utilities
+              links:
                 - title: Stirling PDF
                   url: https://pdf.bhumit070.bid
                   icon: si:ilovepdf
@@ -72,6 +72,10 @@
                 - title: Webhooks to Discord
                   url: https://webhooks.bhumit070.bid
                   icon: si:discord
+
+                - title: Youtube to RSS
+                  url: https://vimrss.com/tool/youtube-to-rss
+                  icon: si:youtube
 
             - title: Docker
               links:

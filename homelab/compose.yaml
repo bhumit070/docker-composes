@@ -472,6 +472,87 @@ services:
     networks:
       - default
 
+  seafile: # File sync & share (v13.0.29), storage.bhumit070.bid
+    image: seafileltd/seafile-mc@sha256:9506f49d5e5065082c134e6348498eed5a5866ddbd94bd5a3e479a6c285bc61a # 13.0.29
+    container_name: seafile
+    restart: unless-stopped
+    volumes:
+      - ./docker_data/seafile:/shared
+    environment:
+      SEAFILE_MYSQL_DB_HOST: seafile-mysql
+      SEAFILE_MYSQL_DB_PORT: 3306
+      SEAFILE_MYSQL_DB_USER: seafile
+      SEAFILE_MYSQL_DB_PASSWORD: ${SEAFILE_DB_PASSWORD}
+      INIT_SEAFILE_MYSQL_ROOT_PASSWORD: ${SEAFILE_DB_ROOT_PASSWORD}
+      SEAFILE_MYSQL_DB_CCNET_DB_NAME: ccnet_db
+      SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: seafile_db
+      SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: seahub_db
+      TIME_ZONE: ${TZ}
+      INIT_SEAFILE_ADMIN_EMAIL: ${SEAFILE_ADMIN_EMAIL} # first start only
+      INIT_SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD} # first start only
+      SEAFILE_SERVER_HOSTNAME: storage.bhumit070.bid
+      SEAFILE_SERVER_PROTOCOL: https
+      SITE_ROOT: /
+      NON_ROOT: "false"
+      JWT_PRIVATE_KEY: ${SEAFILE_JWT_PRIVATE_KEY}
+      SEAFILE_LOG_TO_STDOUT: "true" # visible in dozzle
+      ENABLE_GO_FILESERVER: "true"
+      ENABLE_SEADOC: "false" # needs a separate sdoc-server container
+      CACHE_PROVIDER: redis
+      REDIS_HOST: seafile-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${SEAFILE_REDIS_PASSWORD}
+      ENABLE_NOTIFICATION_SERVER: "false"
+      ENABLE_SEAFILE_AI: "false"
+      ENABLE_FACE_RECOGNITION: "false"
+    depends_on:
+      seafile-mysql:
+        condition: service_healthy
+      seafile-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - default
+
+  seafile-mysql:
+    image: mariadb@sha256:d769e37960821dfdcf096954f6e7ac89f747e116c1bba98e48edd265dfc7deae # mariadb:10.11
+    container_name: seafile-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SEAFILE_DB_ROOT_PASSWORD}
+      MYSQL_LOG_CONSOLE: "true"
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - ~/docker/seafile_mysql:/var/lib/mysql # off NTFS: mariadb needs chown/chmod
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--connect", "--mariadbupgrade", "--innodb_initialized"]
+      interval: 20s
+      start_period: 30s
+      timeout: 5s
+      retries: 10
+    networks:
+      - default
+
+  seafile-redis:
+    image: valkey/valkey@sha256:8f836008e0986c36adf50da714c7060cf689dbb335f61fe077939d90fa650809 # valkey:8.1
+    container_name: seafile-redis
+    restart: unless-stopped
+    command: ["/bin/sh", "-c", "exec valkey-server --requirepass \"$$REDIS_PASSWORD\" --save '' --appendonly no"]
+    environment:
+      REDIS_PASSWORD: ${SEAFILE_REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a \"$$REDIS_PASSWORD\" --no-auth-warning ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - default
+
 volumes:
   model-cache:
   filebrowser_data:
